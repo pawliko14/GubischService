@@ -1,0 +1,48 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AplikacjaGubisch.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Rack" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Slot" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="CPUType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">CpuType.S7300</Value>
+    </Setting>
+    <Setting Name="RefreshFreq" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="IP" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">192.168.90.94</Value>
+    </Setting>
+    <Setting Name="PATHchipbreaker" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\192.168.90.203\common\Programy\Aplikacja Gubisch\chipbreaker.png</Value>
+    </Setting>
+    <Setting Name="PATHDP_Station" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\192.168.90.203\common\Programy\Aplikacja Gubisch\DP_station.png</Value>
+    </Setting>
+    <Setting Name="PATHfeedbeamRollers" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\192.168.90.203\common\Programy\Aplikacja Gubisch\feedbeam_rollers.png</Value>
+    </Setting>
+    <Setting Name="PATHgroovespindle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\192.168.90.203\common\Programy\Aplikacja Gubisch\groove_spindle.png</Value>
+    </Setting>
+    <Setting Name="PATHguidens" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\192.168.90.203\common\Programy\Aplikacja Gubisch\guidens.png</Value>
+    </Setting>
+    <Setting Name="PATHsawunit" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\192.168.90.203\common\Programy\Aplikacja Gubisch\saw_unit.png</Value>
+    </Setting>
+    <Setting Name="PATHservicemodulepic" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\192.168.90.203\common\Programy\Aplikacja Gubisch\servicemodule.png</Value>
+    </Setting>
+    <Setting Name="PATHspindlehorizontal" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\192.168.90.203\common\Programy\Aplikacja Gubisch\spindle_horizontal.png</Value>
+    </Setting>
+    <Setting Name="PATHtenonvisior" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\192.168.90.203\common\Programy\Aplikacja Gubisch\tenon_visior.png</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

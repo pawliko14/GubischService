@@ -1,0 +1,13 @@
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\bin\Debug\AplikacjaGubisch.exe.config
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\bin\Debug\AplikacjaGubisch.exe
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\bin\Debug\AplikacjaGubisch.pdb
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\bin\Debug\S7.Net.dll
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\bin\Debug\S7.Net.pdb
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\obj\Debug\AplikacjaGubisch.csprojAssemblyReference.cache
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\obj\Debug\AplikacjaGubisch.Properties.Resources.resources
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\obj\Debug\AplikacjaGubisch.csproj.GenerateResource.cache
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\obj\Debug\AplikacjaGubisch.csproj.CoreCompileInputs.cache
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\obj\Debug\AplikacjaGubisch.csproj.CopyComplete
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\obj\Debug\AplikacjaGubisch.exe
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\obj\Debug\AplikacjaGubisch.pdb
+C:\Users\el08\source\VisualStudio_S7\AplikacjaGubisch\AplikacjaGubisch\obj\Debug\AplikacjaGubisch.Form2.resources
