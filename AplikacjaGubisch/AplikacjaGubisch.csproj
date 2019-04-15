@@ -101,7 +101,7 @@
     <Content Include="Resources\ServiceModule.png" />
     <Content Include="Resources\spindle_horizontal.png" />
     <Content Include="Resources\tenon_visior.png" />
-    <Content Include="XMLFile1.xml">
+    <Content Include="XMLFileENG.xml">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>

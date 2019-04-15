@@ -59,9 +59,18 @@ namespace AplikacjaGubisch.Properties {
             }
         }
         
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.90.139")]
+        public string IP {
+            get {
+                return ((string)(this["IP"]));
+            }
+        }
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("510")]
         public int RefreshFreq {
             get {
                 return ((int)(this["RefreshFreq"]));
@@ -71,18 +80,9 @@ namespace AplikacjaGubisch.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.90.94")]
-        public string IP {
-            get {
-                return ((string)(this["IP"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\192.168.90.203\\common\\Programy\\Aplikacja Gubisch\\chipbreaker.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\dataserver\\\\Common\\\\Programy\\\\Aplikacja Gubisch\\\\chipbreaker.png")]
         public string PATHchipbreaker {
             get {
                 return ((string)(this["PATHchipbreaker"]));
@@ -94,7 +94,7 @@ namespace AplikacjaGubisch.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\192.168.90.203\\common\\Programy\\Aplikacja Gubisch\\DP_station.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\dataserver\\\\Common\\\\Programy\\\\Aplikacja Gubisch\\\\DP_station.png")]
         public string PATHDP_Station {
             get {
                 return ((string)(this["PATHDP_Station"]));
@@ -106,7 +106,7 @@ namespace AplikacjaGubisch.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\192.168.90.203\\common\\Programy\\Aplikacja Gubisch\\feedbeam_rollers.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\dataserver\\\\Common\\\\Programy\\\\Aplikacja Gubisch\\\\feedbeam_rollers.png")]
         public string PATHfeedbeamRollers {
             get {
                 return ((string)(this["PATHfeedbeamRollers"]));
@@ -118,7 +118,7 @@ namespace AplikacjaGubisch.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\192.168.90.203\\common\\Programy\\Aplikacja Gubisch\\groove_spindle.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\dataserver\\\\Common\\\\Programy\\\\Aplikacja Gubisch\\\\groove_spindle.png")]
         public string PATHgroovespindle {
             get {
                 return ((string)(this["PATHgroovespindle"]));
@@ -130,7 +130,7 @@ namespace AplikacjaGubisch.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\192.168.90.203\\common\\Programy\\Aplikacja Gubisch\\guidens.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\dataserver\\\\Common\\\\Programy\\\\Aplikacja Gubisch\\\\guidens.png")]
         public string PATHguidens {
             get {
                 return ((string)(this["PATHguidens"]));
@@ -142,7 +142,7 @@ namespace AplikacjaGubisch.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\192.168.90.203\\common\\Programy\\Aplikacja Gubisch\\saw_unit.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\dataserver\\\\Common\\\\Programy\\\\Aplikacja Gubisch\\\\saw_unit.png")]
         public string PATHsawunit {
             get {
                 return ((string)(this["PATHsawunit"]));
@@ -154,7 +154,7 @@ namespace AplikacjaGubisch.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\192.168.90.203\\common\\Programy\\Aplikacja Gubisch\\servicemodule.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\dataserver\\\\Common\\\\Programy\\\\Aplikacja Gubisch\\\\servicemodule.png")]
         public string PATHservicemodulepic {
             get {
                 return ((string)(this["PATHservicemodulepic"]));
@@ -166,7 +166,7 @@ namespace AplikacjaGubisch.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\192.168.90.203\\common\\Programy\\Aplikacja Gubisch\\spindle_horizontal.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\dataserver\\\\Common\\\\Programy\\\\Aplikacja Gubisch\\\\spindle_horizontal.png")]
         public string PATHspindlehorizontal {
             get {
                 return ((string)(this["PATHspindlehorizontal"]));
@@ -178,13 +178,49 @@ namespace AplikacjaGubisch.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\192.168.90.203\\common\\Programy\\Aplikacja Gubisch\\tenon_visior.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\dataserver\\\\Common\\\\Programy\\\\Aplikacja Gubisch\\\\tenon_visior.png")]
         public string PATHtenonvisior {
             get {
                 return ((string)(this["PATHtenonvisior"]));
             }
             set {
                 this["PATHtenonvisior"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\dataserver\\\\Common\\\\Programy\\\\Aplikacja Gubisch\\\\XMLFileENG.xml")]
+        public string PathToXMLENG {
+            get {
+                return ((string)(this["PathToXMLENG"]));
+            }
+            set {
+                this["PathToXMLENG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\dataserver\\\\Common\\\\Programy\\\\Aplikacja Gubisch\\\\XMLFileDEU.xml")]
+        public string PathToXMLDEU {
+            get {
+                return ((string)(this["PathToXMLDEU"]));
+            }
+            set {
+                this["PathToXMLDEU"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string LanguageOption {
+            get {
+                return ((string)(this["LanguageOption"]));
+            }
+            set {
+                this["LanguageOption"] = value;
             }
         }
     }

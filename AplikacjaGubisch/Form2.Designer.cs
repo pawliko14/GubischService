@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tenonMachineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chipBreakerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,11 +45,9 @@
             this.spindle3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grooveSpindleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.guidensToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.langToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deutschToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ConnectionBox = new System.Windows.Forms.TextBox();
+            this.TimeBox = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,8 +55,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tenonMachineToolStripMenuItem,
-            this.profileMachineToolStripMenuItem,
-            this.langToolStripMenuItem});
+            this.profileMachineToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -174,27 +172,6 @@
             this.guidensToolStripMenuItem.Text = "Guidens";
             this.guidensToolStripMenuItem.Click += new System.EventHandler(this.guidensToolStripMenuItem_Click);
             // 
-            // langToolStripMenuItem
-            // 
-            this.langToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.englishToolStripMenuItem,
-            this.deutschToolStripMenuItem});
-            this.langToolStripMenuItem.Name = "langToolStripMenuItem";
-            this.langToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
-            this.langToolStripMenuItem.Text = "Lang";
-            // 
-            // englishToolStripMenuItem
-            // 
-            this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
-            this.englishToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.englishToolStripMenuItem.Text = "English";
-            // 
-            // deutschToolStripMenuItem
-            // 
-            this.deutschToolStripMenuItem.Name = "deutschToolStripMenuItem";
-            this.deutschToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.deutschToolStripMenuItem.Text = "Deutsch";
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
@@ -210,16 +187,30 @@
             this.ConnectionBox.ReadOnly = true;
             this.ConnectionBox.Size = new System.Drawing.Size(145, 21);
             this.ConnectionBox.TabIndex = 1;
-            this.ConnectionBox.Text = "Connection";
+            this.ConnectionBox.Text = "Verbindung";
             this.ConnectionBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // TimeBox
+            // 
+            this.TimeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TimeBox.Enabled = false;
+            this.TimeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TimeBox.Location = new System.Drawing.Point(530, 5);
+            this.TimeBox.Name = "TimeBox";
+            this.TimeBox.ReadOnly = true;
+            this.TimeBox.Size = new System.Drawing.Size(107, 20);
+            this.TimeBox.TabIndex = 2;
+            this.TimeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.TimeBox);
             this.Controls.Add(this.ConnectionBox);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form2";
             this.Text = "Form2";
@@ -248,10 +239,8 @@
         private System.Windows.Forms.ToolStripMenuItem spindle3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grooveSpindleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem guidensToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem langToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem englishToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deutschToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.TextBox ConnectionBox;
+        private System.Windows.Forms.TextBox TimeBox;
     }
 }

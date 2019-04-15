@@ -1,0 +1,16 @@
+REM  *****  BASIC  *****
+Sub Main
+Filename = "C:\Users\el08\Desktop\GUBISCH_180900\T1231231234.txt"
+UrlOUT = convertToURL(Filename)
+Dim FileProperties(1) As New com.sun.star.beans.PropertyValue
+Dim Url As String
+FileProperties(0).Name = "FilterName"
+FileProperties(0).Value ="Text - txt - csv (StarCalc)"
+FileProperties(1).Name = "FilterOptions"
+FileProperties(1).value  = "9,0,76,1,"
+'with ThisComponent.CurrentController.getActiveSheet()
+ '  .columns.removebyindex(0,1) 'col A
+ '  .columns.removebyindex(1,6) ' remaining B:G
+'end with
+ThisComponent.storeAsURL(UrlOUT,FileProperties)
+End Sub

@@ -14,8 +14,15 @@ using System.Xml.Serialization;
 using S7.Net;
 namespace AplikacjaGubisch
 {
+
     public partial class Form2 : Form
     {
+
+        /* Mboxy - odpowiadaja za wyswietlanie message'ow 
+            pobranych ze zmiennych DB[].DBX[].[]
+            panela sa utworzone dla kazdego modulu, ale nie na wszystkich sa aktywne
+        */
+
         private TextBox Mbox = new TextBox(); // dla TenonVisior text box z messegami
         private TextBox Mbox_Chip = new TextBox(); // dla ChipBreakera
         private TextBox Mbox_Saw = new TextBox(); // dla ChipBreakera
@@ -32,7 +39,6 @@ namespace AplikacjaGubisch
         //Tenon Visior Lists
         List<string> lista_z_PLC;
         List<TextBox> textBox_z_plc;
-        List<ComboBox> comboBoxValues;
         List<String> messages_VISIOR;
         List<TextBox> textBoxMessage;
         List<string> Numeracja_zdjecie_VISIOR;
@@ -40,81 +46,61 @@ namespace AplikacjaGubisch
         //Chip Breaker Lists
         List<string> lista_z_PLC_CHIP;
         List<TextBox> textBox_z_plc_CHIP;
-        List<ComboBox> comboBoxValues_CHIP;
         List<String> messages_CHIP;
-        List<TextBox> textBoxMessage_CHIP;
         List<string> Numeracja_zdjecie_CHIP;
 
         //SawUnit Breaker Lists
         List<string> lista_z_PLC_SAW;
         List<TextBox> textBox_z_plc_SAW;
-        List<ComboBox> comboBoxValues_SAW;
         List<String> messages_SAW;
-        List<TextBox> textBoxMessage_SAW;
         List<string> Numeracja_zdjecie_SAW;
 
         //UnloadStation lists
         List<string> lista_z_PLC_STATION;
         List<TextBox> textBox_z_plc_STATION;
-        List<ComboBox> comboBoxValues_STATION;
         List<String> messages_STATION;
-        List<TextBox> textBoxMessage_STATION;
         List<string> Numeracja_zdjecie_STATION;
 
         //Feedbeam Rollers lists
         List<string> lista_z_PLC_FEEDBEAM;
         List<TextBox> textBox_z_plc_FEEDBEAM;
-        List<ComboBox> comboBoxValues_FEEDBEAM;
         List<String> messages_FEEDBEAM;
-        List<TextBox> textBoxMessage_FEEDBEAM;
         List<string> Numeracja_zdjecie_FEEDBEAM;
 
         //Spindle1 Rollers lists
         List<string> lista_z_PLC_SPINDLE1;
         List<TextBox> textBox_z_plc_SPINDLE1;
-        List<ComboBox> comboBoxValues_SPINDLE1;
         List<String> messages_SPINDLE1;
-        List<TextBox> textBoxMessage_SPINDLE1;
         List<string> Numeracja_zdjecie_SPINDLE1;
 
         //Spindle2 Rollers lists
         List<string> lista_z_PLC_SPINDLE2;
         List<TextBox> textBox_z_plc_SPINDLE2;
-        List<ComboBox> comboBoxValues_SPINDLE2;
         List<String> messages_SPINDLE2;
-        List<TextBox> textBoxMessage_SPINDLE2;
         List<string> Numeracja_zdjecie_SPINDLE2;
 
         //Spindle3 Rollers lists
         List<string> lista_z_PLC_SPINDLE3;
         List<TextBox> textBox_z_plc_SPINDLE3;
-        List<ComboBox> comboBoxValues_SPINDLE3;
         List<String> messages_SPINDLE3;
-        List<TextBox> textBoxMessage_SPINDLE3;
         List<string> Numeracja_zdjecie_SPINDLE3;
 
         //Groove Rollers lists
         List<string> lista_z_PLC_GROOVE;
         List<TextBox> textBox_z_plc_GROOVE;
-        List<ComboBox> comboBoxValues_GROOVE;
         List<String> messages_GROOVE;
-        List<TextBox> textBoxMessage_GROOVE;
         List<string> Numeracja_zdjecie_GROOVE;
 
         //Guidens Lists;
         List<string> lista_z_PLC_GUIDENS;
         List<TextBox> textBox_z_plc_GUIDENS;
-        List<ComboBox> comboBoxValues_GUIDENS;
         List<String> messages_GUIDENS;
-        List<TextBox> textBoxMessage_GUIDENS;
         List<string> Numeracja_zdjecie_GUIDENS;
 
         //Guidens Lists;
         List<string> lista_z_PLC_CLEAN;
         List<TextBox> textBox_z_plc_CLEAN;
-        List<ComboBox> comboBoxValues_CLEAN;
         List<String> messages_CLEAN;
-        List<TextBox> textBoxMessage_CLEAN;
         List<string> Numeracja_zdjecie_CLEAN;
 
         Plc plc;
@@ -134,11 +120,30 @@ namespace AplikacjaGubisch
 
         private Panel StartingPanel = new Panel();
 
+        private TenonMachineXML ob;
+
         // zmienne do rozmiarow boxow
         private static int BoxesHeigh = 20;
+        private static int MarkerBoxWidth = 130; // 110
+        private static int MarkerBoxLeft = 80;  // 60
+        
+        private static int DBWboxWidth = 92;
+
+        private static string TenonLang;
+        private static string ChipLang;
+        private static string SawLang;
+        private static string UnloadLang;
+        private static string CleanLang;
+        private static string FeedbeamLang;
+        private static string Spindle1Lang;
+        private static string Spindle2Lang;
+        private static string Spindle3Lang;
+        private static string grooveLang;
+        private static string guidensLang;
 
         public Form2()
         {
+
             this.MinimumSize = new Size(640, 440);
             this.TenonVisiorPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ChipBreakerPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -154,6 +159,9 @@ namespace AplikacjaGubisch
             this.BackColor = Color.White;
 
             InitializeComponent();
+
+            
+            
 
             this.Text = "Gubisch CW180900 - Service module";
 
@@ -212,7 +220,7 @@ namespace AplikacjaGubisch
 
             PictureBox picture_STATION = new PictureBox();
             picture_STATION.Location = new System.Drawing.Point(300, 50);
-            picture_STATION.Name = "picture_SAW";
+            picture_STATION.Name = "picture_STATION";
             picture_STATION.SizeMode = PictureBoxSizeMode.AutoSize;
             picture_STATION.BackColor = Color.Black;
             picture_STATION.ImageLocation = Properties.Settings.Default.PATHDP_Station;
@@ -226,8 +234,8 @@ namespace AplikacjaGubisch
             UnloadStationPanel.AutoScroll = true;
 
             PictureBox picture_FEEDBEAM = new PictureBox();
-            picture_FEEDBEAM.Location = new System.Drawing.Point(220, 50);
-            picture_FEEDBEAM.Name = "picture_SAW";
+            picture_FEEDBEAM.Location = new System.Drawing.Point(222, 50);
+            picture_FEEDBEAM.Name = "picture_FEEDBEAM";
             picture_FEEDBEAM.SizeMode = PictureBoxSizeMode.AutoSize;
             picture_FEEDBEAM.BackColor = Color.Black;
             picture_FEEDBEAM.ImageLocation = Properties.Settings.Default.PATHfeedbeamRollers;
@@ -242,7 +250,7 @@ namespace AplikacjaGubisch
 
             PictureBox picture_Spindle1 = new PictureBox();
             picture_Spindle1.Location = new System.Drawing.Point(220, 50);
-            picture_Spindle1.Name = "picture_SAW";
+            picture_Spindle1.Name = "picture_SPINDLE1";
             picture_Spindle1.SizeMode = PictureBoxSizeMode.AutoSize;
             picture_Spindle1.BackColor = Color.Black;
             picture_Spindle1.ImageLocation = Properties.Settings.Default.PATHspindlehorizontal;
@@ -257,7 +265,7 @@ namespace AplikacjaGubisch
 
             PictureBox picture_Spindle2 = new PictureBox();
             picture_Spindle2.Location = new System.Drawing.Point(220, 50);
-            picture_Spindle2.Name = "picture_SAW";
+            picture_Spindle2.Name = "picture_SPINDLE2";
             picture_Spindle2.SizeMode = PictureBoxSizeMode.AutoSize;
             picture_Spindle2.BackColor = Color.Black;
             picture_Spindle2.ImageLocation = Properties.Settings.Default.PATHspindlehorizontal;
@@ -272,7 +280,7 @@ namespace AplikacjaGubisch
 
             PictureBox picture_Spindle3 = new PictureBox();
             picture_Spindle3.Location = new System.Drawing.Point(220, 50);
-            picture_Spindle3.Name = "picture_SAW";
+            picture_Spindle3.Name = "picture_SPINDLE3";
             picture_Spindle3.SizeMode = PictureBoxSizeMode.AutoSize;
             picture_Spindle3.BackColor = Color.Black;
             picture_Spindle3.ImageLocation = Properties.Settings.Default.PATHspindlehorizontal;
@@ -287,7 +295,7 @@ namespace AplikacjaGubisch
 
             PictureBox picture_Groove= new PictureBox();
             picture_Groove.Location = new System.Drawing.Point(220, 50);
-            picture_Groove.Name = "picture_SAW";
+            picture_Groove.Name = "picture_GROOVESPINLDE";
             picture_Groove.SizeMode = PictureBoxSizeMode.AutoSize;
             picture_Groove.BackColor = Color.Black;
             picture_Groove.ImageLocation = Properties.Settings.Default.PATHgroovespindle;
@@ -302,7 +310,7 @@ namespace AplikacjaGubisch
 
             PictureBox picture_Guidens = new PictureBox();
             picture_Guidens.Location = new System.Drawing.Point(220, 50);
-            picture_Guidens.Name = "picture_SAW";
+            picture_Guidens.Name = "picture_GUIDENS";
             picture_Guidens.SizeMode = PictureBoxSizeMode.AutoSize;
             picture_Guidens.BackColor = Color.Black;
             picture_Guidens.ImageLocation = Properties.Settings.Default.PATHguidens;
@@ -312,14 +320,76 @@ namespace AplikacjaGubisch
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            string path = "";
             
+            if(Properties.Settings.Default.LanguageOption == "0") // JESLI 0 TO ZALADUJE XML Z ANGIELSKIMI TEKSTAMI
+            {
+                 path = Properties.Settings.Default.PathToXMLENG;
 
-            string path = "\\\\dataserver\\Common\\Programy\\Aplikacja Gubisch\\XMLFile1.xml";
+                TenonLang = "Tenon Visior Module";
+                ChipLang = "Chip Breaker Module";
+                SawLang = "Saw Unit Module";
+                UnloadLang = "Unload Station Module";
+
+                CleanLang = "Clean Table Module";
+                FeedbeamLang = "Feedbeam Rollers Module";
+                Spindle1Lang = "HORIZONTAL SPINDLE -1- POSITION MODULE";
+                Spindle2Lang = "HORIZONTAL SPINDLE -2- POSITION MODULE";
+                Spindle3Lang = "HORIZONTAL SPINDLE -3- POSITION MODULE";
+                grooveLang = "Groove Spindle Module";
+                guidensLang = "Guidens Module";
+
+
+            }
+            else if (Properties.Settings.Default.LanguageOption == "1") // JESLI 1 TO ZALADUJE MXL Z NIEMIECKIMI TEKSTAMI
+            {
+                 path = Properties.Settings.Default.PathToXMLDEU;
+
+                
+
+                tenonMachineToolStripMenuItem.Text = "Tenonmaschine";
+                chipBreakerToolStripMenuItem.Text = "Spanbrecher";
+                sawUnitToolStripMenuItem.Text = "Sägeeinheit";
+                unloadStationToolStripMenuItem.Text = "Entladestation";
+
+                profileMachineToolStripMenuItem.Text = "Profilmaschine";
+                cleanTableToolStripMenuItem.Text = "sauberer Tisch";
+                feedbeamTableToolStripMenuItem.Text = "Vorschubstrahl";
+                horizontalSpindlePOSToolStripMenuItem.Text = "horizontale Spindelposition";
+
+                spindle1ToolStripMenuItem.Text = "Spindel 1";
+                spindle2ToolStripMenuItem.Text = "Spindel 2";
+                spindle3ToolStripMenuItem.Text = "Spindel 3";
+                grooveSpindleToolStripMenuItem.Text = "Rille Spindel";
+                guidensToolStripMenuItem.Text = "Führungsschiene";
+
+
+                TenonLang = "Tenonmaschine";
+                ChipLang = "Spanbrecher";
+                SawLang = "Sägeeinheit";
+                UnloadLang = "Entladestation";
+
+                CleanLang = "Sauberer Tisch";
+                FeedbeamLang = "Vorschubstrahl";
+                Spindle1Lang = "Horizontale Spindel 1";
+                Spindle2Lang = "Horizontale Spindel 2";
+                Spindle3Lang = "Horizontale Spindel 3";
+                grooveLang = "Rille Spindel";
+                guidensLang = "Führungsschiene";
+
+            }
+
             FileStream fs = File.OpenRead(path);
-            TenonMachineXML ob = (TenonMachineXML)new XmlSerializer(typeof(TenonMachineXML)).Deserialize(fs); // deserializacja do obiektu klasy Produkty
+             ob = (TenonMachineXML)new XmlSerializer(typeof(TenonMachineXML)).Deserialize(fs); // deserializacja do obiektu klasy Produkty
 
 
             plc = new Plc(CpuType.S7300, Properties.Settings.Default.IP, Properties.Settings.Default.Rack, Properties.Settings.Default.Slot);
+
+
+            lista_z_PLC_CHIP = new List<string>();
+            textBox_z_plc_CHIP = new List<TextBox>();
+            messages_CHIP = new List<string>();
+            Numeracja_zdjecie_CHIP = new List<string>();
 
             StartStartingPanel();
 
@@ -397,7 +467,6 @@ namespace AplikacjaGubisch
 
             lista_z_PLC = new List<string>();
             textBox_z_plc = new List<TextBox>();
-            comboBoxValues = new List<ComboBox>();
             messages_VISIOR = new List<string>();
             textBoxMessage = new List<TextBox>();
 
@@ -421,7 +490,6 @@ namespace AplikacjaGubisch
 
                         TextBox box_zdjecie = new TextBox();
                         box_zdjecie.AutoSize = false;
-                        //   box_zdjecie.ReadOnly = true;
                         box_zdjecie.Text = element.Message.ToString();
                         box_zdjecie.Left = left_blokDanych - 20;
                         box_zdjecie.Top = top;
@@ -431,7 +499,6 @@ namespace AplikacjaGubisch
 
 
                         pane.Controls.Add(box_zdjecie);
-                        //top += box_zdjecie.Height + 5;
                     }
                 }
                 // SET
@@ -462,7 +529,22 @@ namespace AplikacjaGubisch
                     box.Top = top;
                     box.Height = BoxesHeigh;
 
-                    box.Width = 50;
+                    if (lista_z_PLC[index].Contains("DBW"))
+                    {
+                        box.Width = DBWboxWidth;
+                        box.Font = new Font("Microsoft Sans Serif", 6.5f);
+                        box.Text = element.komentarz.ToString();
+                        box.Left = left_blokDanych - 20;
+
+                    }
+                    else if (lista_z_PLC[index].Contains("M"))
+                    {
+                        box.Width = 45; // -5px
+                        box.Left = left_blokDanych - 20; // - 10px
+                        box.Visible = false;
+                    }
+                    else
+                        box.Width = 50;
 
                     pane.Controls.Add(box);
                     top += box.Height + 5;
@@ -479,6 +561,22 @@ namespace AplikacjaGubisch
                     box1.Left = left_PlcData;
                     box1.Top = top2;
                     box1.Height = BoxesHeigh;
+
+                    if (lista_z_PLC[index].Contains("DBW"))
+                    {
+                        box1.Width = 30;
+                        box1.Left = left_PlcData + 20;
+                    }
+                    else if (lista_z_PLC[index].Contains("M"))
+                    {
+                        box1.Width = MarkerBoxWidth;
+                        box1.Left = left_PlcData - MarkerBoxLeft;
+                    }
+                    else
+                    {
+                        box1.Width = 50;
+                        box1.Left = left_PlcData;
+                    }
 
                     pane.Controls.Add(box1);
                     top2 += box1.Height + 5;
@@ -516,7 +614,7 @@ namespace AplikacjaGubisch
             pane.Size = new System.Drawing.Size(650, 400);
             pane.Dock = DockStyle.Fill;
             this.Controls.Add(pane);
-
+            
 
             int top = 70;
             int top2 = 70;
@@ -527,10 +625,7 @@ namespace AplikacjaGubisch
 
             lista_z_PLC_CHIP = new List<string>();
             textBox_z_plc_CHIP = new List<TextBox>();
-            comboBoxValues_CHIP = new List<ComboBox>();
             messages_CHIP = new List<string>();
-            textBoxMessage_CHIP = new List<TextBox>();
-
             Numeracja_zdjecie_CHIP = new List<string>();
             int index = 0;
 
@@ -538,6 +633,7 @@ namespace AplikacjaGubisch
             foreach (var element in ob.Chipbreaker)
             {
                 lista_z_PLC_CHIP.Add(element.blok_danych.ToString());
+                Console.WriteLine("chip braker dane: " + element.blok_danych.ToString());
                 messages_CHIP.Add(element.komentarz.ToString());
                 
                 Numeracja_zdjecie_CHIP.Add(element.Message.ToString());
@@ -591,7 +687,7 @@ namespace AplikacjaGubisch
                     box3.Text = "SET";
                     box3.Name = index.ToString(); // jako sama cyfra
                     box3.Width = 50;
-                    box3.Height = BoxesHeigh;
+                    box3.Height = BoxesHeigh+10;
                     box3.Left = left_ToPLC;
                     box3.Top = top;
                     pane.Controls.Add(box3);
@@ -604,17 +700,42 @@ namespace AplikacjaGubisch
                 //blok danych
                 if (!lista_z_PLC_CHIP[index].Contains("DBX"))
                 {
+
                     TextBox box = new TextBox();
                     box.AutoSize = false;
                     box.ReadOnly = true;
-                    box.Text = element.blok_danych.ToString();
                     box.Left = left_blokDanych;
                     box.Top = top;
                     box.Height = BoxesHeigh;
-                    box.Width = 50;
+                    box.Text = element.blok_danych.ToString();
+
+
+                    if (lista_z_PLC_CHIP[index].Contains("DBW"))
+                    {
+                        box.Height = BoxesHeigh + 10;
+                        box.Font = new Font("Microsoft Sans Serif", 6.5f);
+                        box.Multiline = true;
+                        box.Width = DBWboxWidth;
+                       
+                        box.Text = element.komentarz.ToString();
+                        box.Left = left_blokDanych - 20;
+                    }
+                    else if (lista_z_PLC_CHIP[index].Contains("M"))
+                    {
+                        box.Width = 45; // -5px
+                        box.Left = left_blokDanych - 20; // - 10px
+                        box.Visible = false;
+
+                    }
+                    else
+                        box.Width = 50;
 
                     pane.Controls.Add(box);
-                    top += box.Height + 5;
+
+                    if(lista_z_PLC_CHIP[index].Contains("DBW"))
+                         top += box.Height + 15;
+                    else
+                        top += box.Height + 5;
 
                 }
 
@@ -622,15 +743,37 @@ namespace AplikacjaGubisch
                 TextBox box1 = new TextBox();
                 if (!lista_z_PLC_CHIP[index].Contains("DBX"))
                 {
+                    box1.TextAlign = HorizontalAlignment.Center;
                     box1.AutoSize = false;
                     box1.ReadOnly = true;
-                    box1.Width = 50;
-                    box1.Left = left_PlcData;
-                    box1.Top = top2;
                     box1.Height = BoxesHeigh;
 
+                    if (lista_z_PLC_CHIP[index].Contains("DBW"))
+                    {
+                        box1.Width = 30;
+                        box1.Left = left_PlcData + 20;
+                        box1.Height = BoxesHeigh + 10;
+                    }
+                    else if (lista_z_PLC_CHIP[index].Contains("M"))
+                    {
+                        box1.Width = MarkerBoxWidth;
+                        box1.Left = left_PlcData - MarkerBoxLeft;
+                    }
+                    else
+                    {
+                        box1.Width = 50;
+                        box1.Left = left_PlcData;
+                    }
+
+                    box1.Top = top2;
+
                     pane.Controls.Add(box1);
-                    top2 += box1.Height + 5;
+
+                    if (lista_z_PLC_CHIP[index].Contains("DBW"))
+                        top2 += box1.Height + 15;
+                    else
+                        top2 += box1.Height + 5;
+
 
 
                 }
@@ -639,7 +782,7 @@ namespace AplikacjaGubisch
                
                 index++;
             }
-
+            
             Mbox_Chip.Multiline = true;
             Mbox_Chip.AutoSize = false;
             Mbox_Chip.Top = top;
@@ -649,6 +792,7 @@ namespace AplikacjaGubisch
 
 
             pane.Controls.Add(Mbox_Chip);
+            
         }
 
         private void LoadSawUnitToPanel(TenonMachineXML ob, Panel pane, string XMLGroup)
@@ -671,9 +815,7 @@ namespace AplikacjaGubisch
 
             lista_z_PLC_SAW = new List<string>();
             textBox_z_plc_SAW = new List<TextBox>();
-            comboBoxValues_SAW = new List<ComboBox>();
             messages_SAW = new List<string>();
-            textBoxMessage_SAW = new List<TextBox>();
 
             Numeracja_zdjecie_SAW = new List<string>();
 
@@ -736,7 +878,22 @@ namespace AplikacjaGubisch
                     box.Top = top;
                     box.Height = BoxesHeigh;
 
-                    box.Width = 50;
+                    if (lista_z_PLC_SAW[index].Contains("DBW"))
+                    {
+                        box.Width = DBWboxWidth;
+                        box.Font = new Font("Microsoft Sans Serif", 6.5f);
+                        box.Text = element.komentarz.ToString();
+                        box.Left = left_blokDanych - 20;
+
+                    }
+                    else if (lista_z_PLC_SAW[index].Contains("M"))
+                    {
+                        box.Width = 45; // -5px
+                        box.Left = left_blokDanych - 20; // - 10px
+                        box.Visible = false;
+                    }
+                    else
+                        box.Width = 50;
 
                     pane.Controls.Add(box);
                     top += box.Height + 5;
@@ -753,6 +910,22 @@ namespace AplikacjaGubisch
                     box1.Left = left_PlcData;
                     box1.Top = top2;
                     box1.Height = BoxesHeigh;
+
+                    if (lista_z_PLC_SAW[index].Contains("DBW"))
+                    {
+                        box1.Width = 30;
+                        box1.Left = left_PlcData + 20;
+                    }
+                    else if (lista_z_PLC_SAW[index].Contains("M"))
+                    {
+                        box1.Width = MarkerBoxWidth;
+                        box1.Left = left_PlcData - MarkerBoxLeft;
+                    }
+                    else
+                    {
+                        box1.Width = 50;
+                        box1.Left = left_PlcData;
+                    }
 
                     pane.Controls.Add(box1);
                     top2 += box1.Height + 5;
@@ -777,6 +950,7 @@ namespace AplikacjaGubisch
 
 
             pane.Controls.Add(Mbox_Saw);
+            
 
         }
 
@@ -799,9 +973,7 @@ namespace AplikacjaGubisch
 
             lista_z_PLC_STATION = new List<string>();
             textBox_z_plc_STATION = new List<TextBox>();
-            comboBoxValues_STATION = new List<ComboBox>();
             messages_STATION = new List<string>();
-            textBoxMessage_STATION = new List<TextBox>();
 
             Numeracja_zdjecie_STATION = new List<string>();
 
@@ -862,7 +1034,22 @@ namespace AplikacjaGubisch
                     box.Top = top;
                     box.Height = BoxesHeigh;
 
-                    box.Width = 50;
+                    if (lista_z_PLC_STATION[index].Contains("DBW"))
+                    {
+                        box.Width = DBWboxWidth;
+                        box.Font = new Font("Microsoft Sans Serif", 6.5f);
+                        box.Text = element.komentarz.ToString();
+                        box.Left = left_blokDanych - 20;
+
+                    }
+                    else if (lista_z_PLC_STATION[index].Contains("M"))
+                    {
+                        box.Width = 45; // -5px
+                        box.Left = left_blokDanych - 20; // - 10px
+                        box.Visible = false;
+                    }
+                    else
+                        box.Width = 50;
 
 
                     pane.Controls.Add(box);
@@ -881,6 +1068,22 @@ namespace AplikacjaGubisch
                     box1.Top = top2;
                     box1.Height = BoxesHeigh;
 
+                    if (lista_z_PLC_STATION[index].Contains("DBW"))
+                    {
+                        box1.Width = 30;
+                        box1.Left = left_PlcData + 20;
+                    }
+                    else if (lista_z_PLC_STATION[index].Contains("M"))
+                    {
+                        box1.Width = MarkerBoxWidth;
+                        box1.Left = left_PlcData - MarkerBoxLeft;
+                    }
+                    else
+                    {
+                        box1.Width = 50;
+                        box1.Left = left_PlcData;
+                    }
+
                     pane.Controls.Add(box1);
                     top2 += box1.Height + 5;
 
@@ -891,7 +1094,7 @@ namespace AplikacjaGubisch
 
                 index++;
             }
-
+            /*
             Mbox_STATION.Multiline = true;
             Mbox_STATION.AutoSize = false;
             Mbox_STATION.Top = top;
@@ -901,6 +1104,7 @@ namespace AplikacjaGubisch
 
 
             pane.Controls.Add(Mbox_STATION);
+            */
         }
 
         private void LoadFeedbeamRollersToPanel(TenonMachineXML ob, Panel pane, string XMLGroup)
@@ -922,9 +1126,7 @@ namespace AplikacjaGubisch
 
             lista_z_PLC_FEEDBEAM = new List<string>();
             textBox_z_plc_FEEDBEAM = new List<TextBox>();
-            comboBoxValues_FEEDBEAM = new List<ComboBox>();
             messages_FEEDBEAM = new List<string>();
-            textBoxMessage_FEEDBEAM = new List<TextBox>();
 
             Numeracja_zdjecie_FEEDBEAM = new List<string>();
 
@@ -1007,7 +1209,23 @@ namespace AplikacjaGubisch
                     box.Top = top;
                     box.Height = BoxesHeigh;
 
-                    box.Width = 50;
+                    if (lista_z_PLC_FEEDBEAM[index].Contains("DBW"))
+                    {
+                        box.Width = DBWboxWidth;
+                        box.Font = new Font("Microsoft Sans Serif", 6.5f);
+                        box.Text = element.komentarz.ToString();
+                        box.Left = left_blokDanych - 20;
+
+                    }
+                    else if (lista_z_PLC_FEEDBEAM[index].Contains("M"))
+                    {
+                        box.Font = new Font("Microsoft Sans Serif", 6.5f);
+                        box.Width = 45; // -5px
+                        box.Left = left_blokDanych - 20; // - 10px
+                        box.Visible = false;
+                    }
+                    else
+                        box.Width = 50;
 
 
                     pane.Controls.Add(box);
@@ -1025,6 +1243,22 @@ namespace AplikacjaGubisch
                     box1.Left = left_PlcData;
                     box1.Top = top2;
                     box1.Height = BoxesHeigh;
+
+                    if (lista_z_PLC_FEEDBEAM[index].Contains("DBW"))
+                    {
+                        box1.Width = 30;
+                        box1.Left = left_PlcData + 20;
+                    }
+                    else if (lista_z_PLC_FEEDBEAM[index].Contains("M"))
+                    {
+                        box1.Width = MarkerBoxWidth;
+                        box1.Left = left_PlcData - MarkerBoxLeft;
+                    }
+                    else
+                    {
+                        box1.Width = 50;
+                        box1.Left = left_PlcData;
+                    }
 
                     pane.Controls.Add(box1);
                     top2 += box1.Height + 5;
@@ -1068,9 +1302,7 @@ namespace AplikacjaGubisch
 
             lista_z_PLC_SPINDLE1 = new List<string>();
             textBox_z_plc_SPINDLE1 = new List<TextBox>();
-            comboBoxValues_SPINDLE1 = new List<ComboBox>();
             messages_SPINDLE1 = new List<string>();
-            textBoxMessage_SPINDLE1 = new List<TextBox>();
 
             Numeracja_zdjecie_SPINDLE1 = new List<string>();
 
@@ -1153,7 +1385,22 @@ namespace AplikacjaGubisch
                     box.Top = top;
                     box.Height = BoxesHeigh;
 
-                    box.Width = 50;
+                    if (lista_z_PLC_SPINDLE1[index].Contains("DBW"))
+                    {
+                        box.Width = DBWboxWidth;
+                        box.Font = new Font("Microsoft Sans Serif", 6.5f);
+                        box.Text = element.komentarz.ToString();
+                        box.Left = left_blokDanych - 20;
+
+                    }
+                    else if (lista_z_PLC_SPINDLE1[index].Contains("M"))
+                    {
+                        box.Width = 45; // -5px
+                        box.Left = left_blokDanych - 20; // - 10px
+                        box.Visible = false;
+                    }
+                    else
+                        box.Width = 50;
 
 
                     pane.Controls.Add(box);
@@ -1167,10 +1414,27 @@ namespace AplikacjaGubisch
                 {
                     box1.AutoSize = false;
                     box1.ReadOnly = true;
-                    box1.Width = 50;
+                  //  box1.Width = 50;
                     box1.Left = left_PlcData;
                     box1.Top = top2;
                     box1.Height = BoxesHeigh;
+
+                    if (lista_z_PLC_SPINDLE1[index].Contains("DBW"))
+                    {
+                        box1.Width = 30;
+                        box1.Left = left_PlcData + 20;
+                    }
+                    else if (lista_z_PLC_SPINDLE1[index].Contains("M"))
+                    {
+                        box1.Width = MarkerBoxWidth;
+                        box1.Left = left_PlcData - MarkerBoxLeft;
+
+                    }
+                    else
+                    {
+                        box1.Width = 50;
+                        box1.Left = left_PlcData;
+                    }
 
                     pane.Controls.Add(box1);
                     top2 += box1.Height + 5;
@@ -1213,9 +1477,7 @@ namespace AplikacjaGubisch
 
             lista_z_PLC_SPINDLE2 = new List<string>();
             textBox_z_plc_SPINDLE2 = new List<TextBox>();
-            comboBoxValues_SPINDLE2 = new List<ComboBox>();
             messages_SPINDLE2 = new List<string>();
-            textBoxMessage_SPINDLE2 = new List<TextBox>();
 
             Numeracja_zdjecie_SPINDLE2 = new List<string>();
 
@@ -1298,7 +1560,22 @@ namespace AplikacjaGubisch
                     box.Top = top;
                     box.Height = BoxesHeigh;
 
-                    box.Width = 50;
+                    if (lista_z_PLC_SPINDLE2[index].Contains("DBW"))
+                    {
+                        box.Width = DBWboxWidth;
+                        box.Font = new Font("Microsoft Sans Serif", 6.5f);
+                        box.Text = element.komentarz.ToString();
+                        box.Left = left_blokDanych - 20;
+
+                    }
+                    else if (lista_z_PLC_SPINDLE2[index].Contains("M"))
+                    {
+                        box.Width = 45; // -5px
+                        box.Left = left_blokDanych - 20; // - 10px
+                        box.Visible = false;
+                    }
+                    else
+                        box.Width = 50;
 
 
                     pane.Controls.Add(box);
@@ -1312,10 +1589,25 @@ namespace AplikacjaGubisch
                 {
                     box1.AutoSize = false;
                     box1.ReadOnly = true;
-                    box1.Width = 50;
                     box1.Left = left_PlcData;
                     box1.Top = top2;
                     box1.Height = BoxesHeigh;
+
+                    if (lista_z_PLC_SPINDLE2[index].Contains("DBW"))
+                    {
+                        box1.Width = 30;
+                        box1.Left = left_PlcData + 20;
+                    }
+                    else if (lista_z_PLC_SPINDLE2[index].Contains("M"))
+                    {
+                        box1.Width = MarkerBoxWidth;
+                        box1.Left = left_PlcData - MarkerBoxLeft;
+                    }
+                    else
+                    {
+                        box1.Width = 50;
+                        box1.Left = left_PlcData;
+                    }
 
                     pane.Controls.Add(box1);
                     top2 += box1.Height + 5;
@@ -1358,9 +1650,7 @@ namespace AplikacjaGubisch
 
             lista_z_PLC_SPINDLE3 = new List<string>();
             textBox_z_plc_SPINDLE3 = new List<TextBox>();
-            comboBoxValues_SPINDLE3 = new List<ComboBox>();
             messages_SPINDLE3 = new List<string>();
-            textBoxMessage_SPINDLE3 = new List<TextBox>();
 
             Numeracja_zdjecie_SPINDLE3 = new List<string>();
 
@@ -1443,7 +1733,22 @@ namespace AplikacjaGubisch
                     box.Top = top;
                     box.Height = BoxesHeigh;
 
-                    box.Width = 50;
+                    if (lista_z_PLC_SPINDLE3[index].Contains("DBW"))
+                    {
+                        box.Width = DBWboxWidth;
+                        box.Font = new Font("Microsoft Sans Serif", 6.5f);
+                        box.Text = element.komentarz.ToString();
+                        box.Left = left_blokDanych - 20;
+
+                    }
+                    else if (lista_z_PLC_SPINDLE3[index].Contains("M"))
+                    {
+                        box.Width = 45; // -5px
+                        box.Left = left_blokDanych - 20; // - 10px
+                        box.Visible = false;
+                    }
+                    else
+                        box.Width = 50;
 
 
                     pane.Controls.Add(box);
@@ -1457,10 +1762,25 @@ namespace AplikacjaGubisch
                 {
                     box1.AutoSize = false;
                     box1.ReadOnly = true;
-                    box1.Width = 50;
                     box1.Left = left_PlcData;
                     box1.Top = top2;
                     box1.Height = BoxesHeigh;
+
+                    if (lista_z_PLC_SPINDLE3[index].Contains("DBW"))
+                    {
+                        box1.Width = 30;
+                        box1.Left = left_PlcData + 20;
+                    }
+                    else if (lista_z_PLC_SPINDLE3[index].Contains("M"))
+                    {
+                        box1.Width = MarkerBoxWidth;
+                        box1.Left = left_PlcData - MarkerBoxLeft;
+                    }
+                    else
+                    {
+                        box1.Width = 50;
+                        box1.Left = left_PlcData;
+                    }
 
                     pane.Controls.Add(box1);
                     top2 += box1.Height + 5;
@@ -1503,9 +1823,7 @@ namespace AplikacjaGubisch
 
             lista_z_PLC_GROOVE = new List<string>();
             textBox_z_plc_GROOVE = new List<TextBox>();
-            comboBoxValues_GROOVE  = new List<ComboBox>();
             messages_GROOVE = new List<string>();
-            textBoxMessage_GROOVE = new List<TextBox>();
 
             Numeracja_zdjecie_GROOVE = new List<string>();
 
@@ -1558,10 +1876,9 @@ namespace AplikacjaGubisch
                 {
                     ComboBox box3 = new ComboBox();
                     box3.DropDownStyle = ComboBoxStyle.DropDownList;
+                    box3.Items.Add("0");
                     box3.Items.Add("1");
                     box3.Items.Add("2");
-                    box3.Items.Add("3");
-                    box3.Items.Add("4");
                     box3.AutoSize = false;
 
                     box3.Text = "SET";
@@ -1588,7 +1905,22 @@ namespace AplikacjaGubisch
                     box.Top = top;
                     box.Height = BoxesHeigh;
 
-                    box.Width = 50;
+                    if (lista_z_PLC_GROOVE[index].Contains("DBW"))
+                    {
+                        box.Width = DBWboxWidth;
+                        box.Font = new Font("Microsoft Sans Serif", 6.5f);
+                        box.Text = element.komentarz.ToString();
+                        box.Left = left_blokDanych - 20;
+
+                    }
+                    else if (lista_z_PLC_GROOVE[index].Contains("M"))
+                    {
+                        box.Width = 45; // -5px
+                        box.Left = left_blokDanych - 20; // - 10px
+                        box.Visible = false;
+                    }
+                    else
+                        box.Width = 50;
 
 
                     pane.Controls.Add(box);
@@ -1606,6 +1938,22 @@ namespace AplikacjaGubisch
                     box1.Left = left_PlcData;
                     box1.Top = top2;
                     box1.Height = BoxesHeigh;
+
+                    if (lista_z_PLC_GROOVE[index].Contains("DBW"))
+                    {
+                        box1.Width = 30;
+                        box1.Left = left_PlcData + 20;
+                    }
+                    else if (lista_z_PLC_GROOVE[index].Contains("M"))
+                    {
+                        box1.Width = MarkerBoxWidth;
+                        box1.Left = left_PlcData - MarkerBoxLeft;
+                    }
+                    else
+                    {
+                        box1.Width = 50;
+                        box1.Left = left_PlcData;
+                    }
 
                     pane.Controls.Add(box1);
                     top2 += box1.Height + 5;
@@ -1648,9 +1996,7 @@ namespace AplikacjaGubisch
 
             lista_z_PLC_GUIDENS = new List<string>();
             textBox_z_plc_GUIDENS = new List<TextBox>();
-            comboBoxValues_GUIDENS = new List<ComboBox>();
             messages_GUIDENS = new List<string>();
-            textBoxMessage_GUIDENS = new List<TextBox>();
 
             Numeracja_zdjecie_GUIDENS = new List<string>();
 
@@ -1689,12 +2035,15 @@ namespace AplikacjaGubisch
                     Button box3 = new Button();
                     box3.AutoSize = false;
 
+
+
                     box3.Text = "SET";
                     box3.Name = index.ToString(); // jako sama cyfra
                     box3.Width = 50;
-                    box3.Height = BoxesHeigh;
+                    box3.Height = BoxesHeigh+10;
                     box3.Left = left_ToPLC;
                     box3.Top = top;     // topSave
+                    //box3.Top = top + 10;
                     pane.Controls.Add(box3);
 
                     box3.Click += new EventHandler(this.button_click); // event testowy
@@ -1717,7 +2066,6 @@ namespace AplikacjaGubisch
                     box3.Top = top;
                     pane.Controls.Add(box3);
 
-                    //   box3.Click += new EventHandler(this.comboBox_SelectIndexChanged); // event testowy
                     box3.SelectedValueChanged += new EventHandler(this.comboBox_SelectIndexChanged);
 
                 }
@@ -1733,11 +2081,31 @@ namespace AplikacjaGubisch
                     box.Top = top;
                     box.Height = BoxesHeigh;
 
-                    box.Width = 50;
+                    if (lista_z_PLC_GUIDENS[index].Contains("DBW"))
+                    {
+                        box.Width = DBWboxWidth;
+                        box.Font = new Font("Microsoft Sans Serif", 6f);
+                        box.Multiline = true;
+                        box.Text = element.komentarz.ToString();
+                        box.Left = left_blokDanych - 20;
+                       
+
+                    }
+                    else if (lista_z_PLC_GUIDENS[index].Contains("M"))
+                    {
+                        box.Width = 45; // -5px
+                        box.Left = left_blokDanych - 20; // - 10px
+                        box.Visible = false;
+                    }
+                    else
+                        box.Width = 50;
 
 
                     pane.Controls.Add(box);
-                    top += box.Height + 5;
+                    if(lista_z_PLC_GUIDENS[index].Contains("M"))
+                        top += box.Height + 25; // BYLO 10
+                    else
+                        top += box.Height + 5;
 
                 }
 
@@ -1752,8 +2120,31 @@ namespace AplikacjaGubisch
                     box1.Top = top2;
                     box1.Height = BoxesHeigh;
 
+                    if (lista_z_PLC_GUIDENS[index].Contains("DBW"))
+                    {
+                        box1.Width = 30;
+                        box1.Left = left_PlcData + 20;
+                    }
+                    else if (lista_z_PLC_GUIDENS[index].Contains("M"))
+                    {
+                        box1.Multiline = true; // dodane dzisiaj 10.04.19
+
+                        box1.Width = MarkerBoxWidth;
+                        box1.Left = left_PlcData - MarkerBoxLeft;
+                        box1.Height = BoxesHeigh + 10;
+                    }
+                    else
+                    {
+                        box1.Width = 50;
+                        box1.Left = left_PlcData;
+                    }
+
                     pane.Controls.Add(box1);
-                    top2 += box1.Height + 5;
+
+                    if (lista_z_PLC_GUIDENS[index].Contains("M"))
+                        top2 += box1.Height + 15;
+                    else
+                        top2 += box1.Height + 5;
 
 
                 }
@@ -1762,16 +2153,6 @@ namespace AplikacjaGubisch
 
                 index++;
             }
-
-            Mbox_Guidens.Multiline = true;
-            Mbox_Guidens.AutoSize = false;
-            Mbox_Guidens.Top = top;
-            Mbox_Guidens.Left = left_blokDanych;
-            Mbox_Guidens.Width = 250;
-            Mbox_Guidens.Height = 100;
-
-
-            pane.Controls.Add(Mbox_Guidens);
         }
 
         private void LoadCleanTableToPanel(TenonMachineXML ob, Panel pane, string XMLGroup)
@@ -1793,9 +2174,7 @@ namespace AplikacjaGubisch
 
             lista_z_PLC_CLEAN = new List<string>();
             textBox_z_plc_CLEAN = new List<TextBox>();
-            comboBoxValues_CLEAN = new List<ComboBox>();
             messages_CLEAN = new List<string>();
-            textBoxMessage_CLEAN = new List<TextBox>();
 
             Numeracja_zdjecie_CLEAN = new List<string>();
 
@@ -1844,14 +2223,19 @@ namespace AplikacjaGubisch
 
                     box3.Click += new EventHandler(this.button_click); // event testowy
                 }
+
+                // przypadek tylko dla clean table
                 else if (lista_z_PLC_CLEAN[index].Contains("DBW"))
                 {
                     ComboBox box3 = new ComboBox();
                     box3.DropDownStyle = ComboBoxStyle.DropDownList;
-                    box3.Items.Add("1");
-                    box3.Items.Add("2");
-                    box3.Items.Add("3");
-                    box3.Items.Add("4");
+                    box3.Items.Add("500");
+                    box3.Items.Add("1000");
+                    box3.Items.Add("1500");
+                    box3.Items.Add("2000");
+                    box3.Items.Add("2500");
+                    box3.Items.Add("3000");
+                    box3.Items.Add("3500");
                     box3.AutoSize = false;
 
                     box3.Text = "SET";
@@ -1877,7 +2261,24 @@ namespace AplikacjaGubisch
                     box.Top = top;
                     box.Height = BoxesHeigh;
 
-                    box.Width = 50;
+                    if (lista_z_PLC_CLEAN[index].Contains("DBW"))
+                    {
+                        box.Width = DBWboxWidth;
+                        box.Font = new Font("Microsoft Sans Serif", 6.5f);
+                        box.Text = element.komentarz.ToString();
+                        box.Left = left_blokDanych - 20;
+
+                    }
+                    else if (lista_z_PLC_CLEAN[index].Contains("M"))
+                    {
+                        box.Width = 45; // -5px
+                      //  box.Multiline = true;
+                        box.Left = left_blokDanych - 20; // - 10px
+                        box.Visible = false;
+                    }
+                    else
+                        box.Width = 50;
+
 
 
                     pane.Controls.Add(box);
@@ -1889,15 +2290,40 @@ namespace AplikacjaGubisch
                 TextBox box1 = new TextBox();
                 if (!lista_z_PLC_CLEAN[index].Contains("DBX"))
                 {
+                    box1.TextAlign = HorizontalAlignment.Center;
                     box1.AutoSize = false;
                     box1.ReadOnly = true;
-                    box1.Width = 50;
-                    box1.Left = left_PlcData;
-                    box1.Top = top2;
                     box1.Height = BoxesHeigh;
 
+
+                    if (lista_z_PLC_CLEAN[index].Contains("DBW"))
+                    {
+                        box1.Width = 30;
+                        box1.Left = left_PlcData + 20;
+                    }
+                    else if (lista_z_PLC_CLEAN[index].Contains("M"))
+                    {
+                        box1.Width = MarkerBoxWidth;
+                        box1.Left = left_PlcData - MarkerBoxLeft;
+                       // box1.Multiline = true;
+                      //  box1.Height = BoxesHeigh + 10;
+
+                    }
+                    else
+                    {
+                        box1.Width = 50;
+                        box1.Left = left_PlcData;
+                    }
+
+                    box1.Top = top2;
+                    
+
                     pane.Controls.Add(box1);
-                    top2 += box1.Height + 5;
+                //    if (lista_z_PLC_CLEAN[index].Contains("M"))
+                  //      top2 += box1.Height + 15;
+                   // else
+
+                        top2 += box1.Height + 5;
 
 
                 }
@@ -1918,9 +2344,13 @@ namespace AplikacjaGubisch
             pane.Controls.Add(Mbox_Clean);
         }
 
+
+        /*
+         uniwersalna funkcja czytajaca z plc
+         */
         private void CzytajzPLc(List<string> listaP, List<TextBox> textBoxPLC, TextBox mmm, List<String> messs)
         {
-        
+            TextBox tempb = new TextBox();
             plc.Open();
             mmm.Text = ""; // zeruj textBoxa zeby wpisac na czysto
             int index_Mess = 0;
@@ -1933,26 +2363,31 @@ namespace AplikacjaGubisch
                     string last = listaP[i].Substring(listaP[i].Length - 1, 1); // np M601.2 to odczyta 2
                     int lastToBit = Convert.ToInt32(last);
 
-                    byte tempByte = 8;
+                    byte tempByte = 8;         // bo byte to 0...7 bitow
                     bool temp;
                     tempByte = Convert.ToByte(plc.Read(listaP[i]));
                     temp = tempByte.SelectBit(lastToBit);
-                    textBoxPLC[i].Text = temp.ToString();
-                    if (textBoxPLC[i].Text == "False")
-                    {
-                        textBoxPLC[i].BackColor = Color.OrangeRed;
-                     //   textBoxPLC[i].ForeColor = Color.OrangeRed;
-                    }
-                    else if (textBoxPLC[i].Text == "True")
-                    {
-                     //   textBoxPLC[i].ForeColor = Color.GreenYellow;
-                       textBoxPLC[i].BackColor = Color.GreenYellow;
-                    }
+                  //  textBoxPLC[i].Text = temp.ToString(); // zamianka na ponizszy wiersz
+                    textBoxPLC[i].Text = messs[i];
+                    textBoxPLC[i].Font = new Font("Microsoft Sans Serif", 6.5f);
+
+                    /*
+                   if (textBoxPLC[i].Text == "False")
+                   {
+                       textBoxPLC[i].BackColor = Color.OrangeRed;
+                    //   textBoxPLC[i].ForeColor = Color.OrangeRed;
+                   }
+                   else if (textBoxPLC[i].Text == "True")
+                   {
+                    //   textBoxPLC[i].ForeColor = Color.GreenYellow;
+                      textBoxPLC[i].BackColor = Color.GreenYellow;
+                   }
+                   */
                 }
                 else if (listaP[i].Contains("DBW"))
                 {
-                    Console.WriteLine("DBW DBW DBW");
                     textBoxPLC[i].Text = Convert.ToInt32(plc.Read(listaP[i])).ToString();
+                    
                 }
                 else
                 {
@@ -1972,8 +2407,6 @@ namespace AplikacjaGubisch
                 }
                  
 
-
-
                 // WCZYTANIE TEKTOW DO MESSEG BOXA
                 if (listaP[i].Contains("DBX"))
                 {
@@ -1984,14 +2417,16 @@ namespace AplikacjaGubisch
                         Console.WriteLine(" DBX'y: FALSE ");
                     }
                     else
-                    {
-                        index_Mess++;
-                        mmm.AppendText("Message "+ index_Mess + ":  "+ messs[i] + Environment.NewLine);
+                    {                    
+                            index_Mess++;
+                        tempb.AppendText("Message " + index_Mess + ":  " + messs[i] + Environment.NewLine);                       
                     }
 
                 }
-
+                  
+                mmm.Text = tempb.Text;
             }
+       
             plc.Close();
   
         }
@@ -2000,35 +2435,14 @@ namespace AplikacjaGubisch
         {
             //get the button clicked
             Button btn = sender as Button;
-           // MessageBox.Show(btn.Name + " CLicked");
-         //   Console.WriteLine("db: " + lista_z_PLC[Convert.ToInt32(btn.Name)]);
-          //  Console.WriteLine("val; " + comboBoxValues[Convert.ToInt32(btn.Name)].Text);
-
-            //  private Panel TenonVisiorPanel = new Panel();
-            //     private Panel ChipBreakerPanel = new Panel();
 
             if (TenonVisiorPanel.Visible == true)
             {
-                //ZapiszDoPlc(lista_z_PLC[Convert.ToInt32(btn.Name)], comboBoxValues[Convert.ToInt32(btn.Name)].Text);
                 ZapiszDoPlc(lista_z_PLC[Convert.ToInt32(btn.Name)], "TRUE");
             }
-
-
             else if (ChipBreakerPanel.Visible == true)
             {
                 ZapiszDoPlc(lista_z_PLC_CHIP[Convert.ToInt32(btn.Name)], "TRUE");
-
-                /*
-                if (comboBoxValues_CHIP[Convert.ToInt32(btn.Name)].Text.Contains("DBW"))
-                {
-                    Console.WriteLine("POWINNNNO byc");
-                    ZapiszDoPLCInt(lista_z_PLC_CHIP[Convert.ToInt32(btn.Name)], comboBoxValues_CHIP[Convert.ToInt32(btn.Name)].Text);
-                }
-                else
-                {
-                    ZapiszDoPlc(lista_z_PLC_CHIP[Convert.ToInt32(btn.Name)], comboBoxValues_CHIP[Convert.ToInt32(btn.Name)].Text);
-                }
-                */
             }
             else if(SawUnitPanel.Visible == true)
             {
@@ -2090,6 +2504,10 @@ namespace AplikacjaGubisch
             {
                 ZapiszDoPLCInt(lista_z_PLC_SAW[Convert.ToInt32(comboBox1.Name)], selectedEmployee);
             }
+            else if(CleanTablePanel.Visible == true)
+            {
+                ZapiszDoPLCInt(lista_z_PLC_CLEAN[Convert.ToInt32(comboBox1.Name)], selectedEmployee);
+            }
             else if (UnloadStationPanel.Visible == true)
             {
                 ZapiszDoPLCInt(lista_z_PLC_STATION[Convert.ToInt32(comboBox1.Name)], selectedEmployee);
@@ -2139,8 +2557,8 @@ namespace AplikacjaGubisch
             TextBox Reg = new TextBox();
             Reg.ReadOnly = true;
                 Reg.Top = 45;
-                Reg.Left = 50;
-                Reg.Width = 110;
+                Reg.Left = 30;
+                Reg.Width = 130;
                 Reg.Height = 20;
 
                 Reg.Name = "RegisterValues";
@@ -2190,8 +2608,8 @@ namespace AplikacjaGubisch
             Mbox_Guidens.Visible = false;
             Mbox_Clean.Visible = false;
 
-            this.Text = "CHIP BREAKER MODULE";
-
+            //  this.Text = "CHIP BREAKER MODULE";
+            this.Text = ChipLang;
 
         }
 
@@ -2223,8 +2641,8 @@ namespace AplikacjaGubisch
             Mbox_Guidens.Visible = false;
             Mbox_Clean.Visible = false;
 
-            this.Text = "TENON VISIOR MODULE";
-
+           // this.Text = "TENON VISIOR MODULE";
+           this.Text = TenonLang;
         }
 
         private void sawUnitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2255,7 +2673,8 @@ namespace AplikacjaGubisch
             Mbox_Guidens.Visible = false;
             Mbox_Clean.Visible = false;
 
-            this.Text = "SAW UNIT MODULE";
+            // this.Text = "SAW UNIT MODULE";
+            this.Text = SawLang;
         }
 
         private void unloadStationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2286,7 +2705,8 @@ namespace AplikacjaGubisch
             Mbox_Guidens.Visible = false;
             Mbox_Clean.Visible = false;
 
-            this.Text = "UNLOAD STATION MODULE";
+            //  this.Text = "UNLOAD STATION MODULE";
+            this.Text = UnloadLang;
         }
 
         private void feedbeamTableToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2318,7 +2738,8 @@ namespace AplikacjaGubisch
             Mbox_Guidens.Visible = false;
             Mbox_Clean.Visible = false;
 
-            this.Text = "FEEDBEAM ROLLERS MODULE";
+            // this.Text = "FEEDBEAM ROLLERS MODULE";
+            this.Text = FeedbeamLang;
         }
 
         private void spindle1ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2349,7 +2770,8 @@ namespace AplikacjaGubisch
             Mbox_Guidens.Visible = false;
             Mbox_Clean.Visible = false;
 
-            this.Text = "HORIZONTAL SPINDLE -1- POSITION MODULE";
+            //  this.Text = "HORIZONTAL SPINDLE -1- POSITION MODULE";
+            this.Text = Spindle1Lang;
         }
 
         private void spindle2ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2380,7 +2802,9 @@ namespace AplikacjaGubisch
             Mbox_Guidens.Visible = false;
             Mbox_Clean.Visible = false;
 
-            this.Text = "HORIZONTAL SPINDLE -2- POSITION MODULE";
+            // this.Text = "HORIZONTAL SPINDLE -2- POSITION MODULE";
+            this.Text = Spindle2Lang;
+
 
         }
 
@@ -2412,7 +2836,9 @@ namespace AplikacjaGubisch
             Mbox_Guidens.Visible = false;
             Mbox_Clean.Visible = false;
 
-            this.Text = "HORIZONTAL SPINDLE -3- POSITION MODULE";
+            //    this.Text = "HORIZONTAL SPINDLE -3- POSITION MODULE";
+            this.Text = Spindle3Lang;
+
 
         }
         private void grooveSpindleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2443,7 +2869,8 @@ namespace AplikacjaGubisch
             Mbox_Guidens.Visible = false;
             Mbox_Clean.Visible = false;
 
-            this.Text = "GROOVE SPINDLE MODULE";
+            // this.Text = "GROOVE SPINDLE MODULE";
+            this.Text = grooveLang;
 
         }
 
@@ -2475,7 +2902,8 @@ namespace AplikacjaGubisch
             Mbox_Guidens.Visible = true;
             Mbox_Clean.Visible = false;
 
-            this.Text = "GUIDENS MODULE";
+            //    this.Text = "GUIDENS MODULE";
+            this.Text = guidensLang;
 
 
         }
@@ -2507,7 +2935,8 @@ namespace AplikacjaGubisch
             Mbox_Guidens.Visible = false;
             Mbox_Clean.Visible = true;
 
-            this.Text = "CLEAN TABLE MODULE";
+            // this.Text = "CLEAN TABLE MODULE";
+            this.Text = CleanLang;
 
         }
 
@@ -2519,13 +2948,22 @@ namespace AplikacjaGubisch
             temp = tempByte.SelectBit(0);
             if(temp == false)
             {
-                ConnectionBox.Text = "Connected";
+                if(Properties.Settings.Default.LanguageOption == "0")
+                    ConnectionBox.Text = "Connected";
+                else
+                     ConnectionBox.Text = "verbunden";
+
                 ConnectionBox.BackColor = Color.LightGreen;
                 ConnectionBox.ForeColor = Color.Black;
             }
             else
             {
-                ConnectionBox.Text = "NOT Connected";
+                if (Properties.Settings.Default.LanguageOption == "0")
+                    ConnectionBox.Text = "NOT Connected";
+
+                else
+                    ConnectionBox.Text = "nicht verbunden";
+
                 ConnectionBox.BackColor = Color.PaleVioletRed;
                 ConnectionBox.ForeColor = Color.Black;
 
@@ -2533,19 +2971,32 @@ namespace AplikacjaGubisch
             plc.Close();
         }
 
+        private void getTime(object sender, EventArgs e)
+        {
+            string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss tt");
+            TimeBox.Text = time;
+        }
+
         private Timer timer1;
+        private Timer timer2;
         public void InitTimer()
         {
             timer1 = new Timer();
             timer1.Tick += new EventHandler(timer1_Tick);
             timer1.Interval = Properties.Settings.Default.RefreshFreq; // in miliseconds
             timer1.Start();
+
+            timer2 = new Timer();
+            timer2.Tick += new EventHandler(getTime);
+            timer2.Interval = 1000; // in miliseconds
+            timer2.Start();
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
             try
             {
                 BitOfLife(); // sprawdza bit M600.0, jesli 1 to Connected, inczaj NOT connected
+                
 
                 if (TenonVisiorPanel.Visible == true)
                     CzytajzPLc(lista_z_PLC, textBox_z_plc, Mbox, messages_VISIOR);
@@ -2578,6 +3029,6 @@ namespace AplikacjaGubisch
             }
         }
 
-       
+     
     }
 }
